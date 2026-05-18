@@ -1,0 +1,6 @@
+f=open("file.txt","wt")
+f.write("i am iron man")
+f.close()
+f=open("file.txt","rt")
+print(f.read())
+f.close()

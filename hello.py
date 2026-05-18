@@ -1,0 +1,8 @@
+f=open("file.txt","rt")
+print(f.readline())
+f.readline()
+f.readline()
+print(f.readline())
+f.close()
+f=open(".txt","wt")
+f.write("this is a write file")
