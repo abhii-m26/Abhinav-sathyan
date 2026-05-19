@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Contact</h2>
+  {% if sent %}
+    <p>Thanks {{ name }}! Your message was received.</p>
+    <p><a href="/">Back to home</a></p>
+  {% else %}
+    <form method="post">
+      {% csrf_token %}
+      <label for="name">Name</label>
+      <input id="name" name="name" required>
+      <label for="message">Message</label>
+      <textarea id="message" name="message" required></textarea>
+      <button type="submit">Send</button>
+    </form>
+  {% endif %}
+{% endblock %}
