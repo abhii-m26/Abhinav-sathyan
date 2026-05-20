@@ -1,0 +1,19 @@
+{% load static %}
+<article class="product-card">
+    <a class="product-media" href="{% url 'product_detail' product.slug %}">
+        <span class="rarity-badge">Private Edition</span>
+        <img src="{% if product.image_url %}{{ product.image_url }}{% else %}{% static 'images/placeholder.svg' %}{% endif %}" alt="{{ product.name }}">
+    </a>
+    <div class="product-card-body">
+        <p class="eyebrow">{{ product.get_category_display }}</p>
+        <h3><a href="{% url 'product_detail' product.slug %}">{{ product.name }}</a></h3>
+        <p class="product-note">Collector allocation · {{ product.stock }} available</p>
+        <p class="price">${{ product.price }}</p>
+        <form class="add-cart-form" data-product-id="{{ product.id }}">
+            {% csrf_token %}
+            <input type="hidden" name="quantity" value="1">
+            <button class="button primary" type="submit">Add to Cart</button>
+        </form>
+        <p class="cart-feedback" aria-live="polite"></p>
+    </div>
+</article>

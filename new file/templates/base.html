@@ -1,0 +1,66 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Veltrion{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script defer src="{% static 'js/cart.js' %}"></script>
+    <script defer src="{% static 'js/motion.js' %}"></script>
+</head>
+<body>
+    <div class="luxury-loader" aria-hidden="true">
+        <div class="loader-mark">
+            <span>V</span>
+        </div>
+        <div class="loader-line"></div>
+    </div>
+    <div class="cursor-light" aria-hidden="true"></div>
+    <div class="ambient-particles" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <header class="site-header">
+        <a class="brand" href="{% url 'home' %}" aria-label="Veltrion home">
+            <span class="brand-mark">V</span>
+            <span>Veltrion</span>
+        </a>
+        <nav class="main-nav" aria-label="Main navigation">
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'product_list' %}">Products</a>
+            <a href="{% url 'cart' %}">Cart <span id="cart-count">{{ cart_count }}</span></a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'profile' %}">Profile</a>
+                <form class="logout-form" action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Logout</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a class="nav-cta" href="{% url 'signup' %}">Sign Up</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <p class="message {{ message.tags }}">{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; {% now "Y" %} Veltrion. Premium commerce experience.</p>
+    </footer>
+</body>
+</html>

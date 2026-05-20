@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Cart | MarketLane{% endblock %}
+{% block content %}
+<section class="page-title">
+    <h1>Your Cart</h1>
+    <p>Update quantities or remove items without leaving the page.</p>
+</section>
+
+<section class="cart-layout">
+    <div class="cart-items" id="cart-items">
+        {% for item in items %}
+            <article class="cart-row" data-item-id="{{ item.id }}">
+                <img src="{{ item.product.image_url }}" alt="{{ item.product.name }}">
+                <div>
+                    <h2>{{ item.product.name }}</h2>
+                    <p>${{ item.product.price }}</p>
+                </div>
+                <input class="cart-quantity" type="number" min="1" value="{{ item.quantity }}" aria-label="Quantity for {{ item.product.name }}">
+                <strong class="line-subtotal">${{ item.subtotal }}</strong>
+                <button class="button ghost remove-item" type="button">Remove</button>
+            </article>
+        {% empty %}
+            <p class="empty-cart">Your cart is empty.</p>
+        {% endfor %}
+    </div>
+    <aside class="summary">
+        <h2>Order Summary</h2>
+        <p><span>Items</span><strong id="summary-count">{{ count }}</strong></p>
+        <p><span>Total</span><strong id="summary-total">${{ total }}</strong></p>
+        <a class="button primary full" href="{% url 'checkout' %}">Checkout</a>
+    </aside>
+</section>
+{% endblock %}

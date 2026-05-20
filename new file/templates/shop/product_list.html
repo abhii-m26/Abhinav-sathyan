@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Products | MarketLane{% endblock %}
+{% block content %}
+<section class="page-title">
+    <p class="eyebrow">Veltrion private catalog</p>
+    <h1>Rare Luxury Collection</h1>
+    <p>Explore ultra-premium watches, flagship technology, couture fashion, elite jewelry, futuristic gadgets, and exclusive accessories.</p>
+</section>
+
+<section class="catalog-layout">
+    <aside class="filters">
+        <h2>Filters</h2>
+        <form method="get" class="filter-form">
+            <label for="category">Category</label>
+            <select id="category" name="category">
+                <option value="">All categories</option>
+                {% for value, label in categories %}
+                    <option value="{{ value }}" {% if selected_category == value %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="max_price">Max price</label>
+            <input id="max_price" name="max_price" type="number" min="0" step="0.01" value="{{ max_price }}">
+
+            <button class="button primary" type="submit">Apply</button>
+            <a class="button ghost" href="{% url 'product_list' %}">Reset</a>
+        </form>
+    </aside>
+
+    <div class="product-grid">
+        {% for product in products %}
+            {% include "shop/partials/product_card.html" %}
+        {% empty %}
+            <p>No products match your filters.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block title %}Veltrion | Luxury Dark Commerce{% endblock %}
+{% block content %}
+<section class="hero luxury-hero">
+    <div class="paper-stage" aria-hidden="true">
+        <span class="paper-layer layer-one"></span>
+        <span class="paper-layer layer-two"></span>
+        <span class="paper-layer layer-three"></span>
+        <span class="metal-line line-one"></span>
+        <span class="metal-line line-two"></span>
+        <span class="glass-orbit orbit-one"></span>
+        <span class="glass-orbit orbit-two"></span>
+    </div>
+    <div class="hero-copy">
+        <p class="eyebrow">Atelier-grade digital commerce</p>
+        <h1>Veltrion</h1>
+        <p>Luxury essentials shaped through cinematic dark interfaces, precision geometry, and restrained metallic detail.</p>
+        <div class="hero-actions">
+            <a class="button primary" href="{% url 'product_list' %}">Explore Collection</a>
+            <a class="button glass" href="{% url 'signup' %}">Private Access</a>
+        </div>
+    </div>
+    <aside class="hero-panel">
+        <p class="panel-kicker">Signature Drop</p>
+        <h2>Nocturne Series</h2>
+        <p>Curated objects, crafted textures, and quiet futuristic hardware for elevated everyday rituals.</p>
+        <div class="metric-row">
+            <span><strong>08</strong> pieces</span>
+            <span><strong>24h</strong> preview</span>
+        </div>
+    </aside>
+</section>
+
+<section class="luxury-strip">
+    <span>Luxury watches</span>
+    <span>Flagship tech</span>
+    <span>Designer fashion</span>
+    <span>Elite jewelry</span>
+</section>
+
+<section class="rotating-showcase">
+    <div class="showcase-copy">
+        <p class="eyebrow">Floating 360 Gallery</p>
+        <h2>Objects suspended in cinematic motion.</h2>
+        <p>Rare pieces levitate through soft light, mirrored depth, gold and silver edge glints, and slow flagship-tech rotation.</p>
+    </div>
+    <div class="showcase-stage" aria-label="Premium rotating product showcase">
+        <span class="stage-ring ring-one" aria-hidden="true"></span>
+        <span class="stage-ring ring-two" aria-hidden="true"></span>
+        <span class="light-streak streak-one" aria-hidden="true"></span>
+        <span class="light-streak streak-two" aria-hidden="true"></span>
+        {% for product in featured_products %}
+            {% if forloop.counter <= 3 %}
+                <article class="floating-product floating-product-{{ forloop.counter }}">
+                    <a href="{% url 'product_detail' product.slug %}">
+                        <span class="floating-glass"></span>
+                        <img src="{{ product.image_url }}" alt="{{ product.name }}">
+                        <span class="floating-shadow"></span>
+                    </a>
+                    <div>
+                        <p>{{ product.get_category_display }}</p>
+                        <h3>{{ product.name }}</h3>
+                    </div>
+                </article>
+            {% endif %}
+        {% endfor %}
+    </div>
+</section>
+
+<section class="section featured-section">
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">Selected Objects</p>
+            <h2>Billionaire Lifestyle Edit</h2>
+        </div>
+        <a class="text-link" href="{% url 'product_list' %}">View all</a>
+    </div>
+    <div class="product-grid">
+        {% for product in featured_products %}
+            {% include "shop/partials/product_card.html" %}
+        {% empty %}
+            <p>No featured products yet. Add some in the admin.</p>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="craft-section">
+    <article>
+        <p class="eyebrow">Material UI</p>
+        <h2>Designed with depth, silence, and precision.</h2>
+    </article>
+    <div class="craft-grid">
+        <div class="craft-card">
+            <span></span>
+            <h3>Rare Product Worlds</h3>
+            <p>Watches, couture, jewelry, perfumes, gadgets, headphones, sneakers, gaming suites, and accessories staged like private artifacts.</p>
+        </div>
+        <div class="craft-card">
+            <span></span>
+            <h3>Reflective Materials</h3>
+            <p>Gold edges, silver trims, glass panels, and polished reflections give every product a cinematic collector-grade presence.</p>
+        </div>
+        <div class="craft-card">
+            <span></span>
+            <h3>Private Storefront</h3>
+            <p>Elegant filters, quiet animations, and spacious dark surfaces create a futuristic luxury buying atmosphere.</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

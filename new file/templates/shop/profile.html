@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Profile | MarketLane{% endblock %}
+{% block content %}
+<section class="profile-layout">
+    <form class="form-panel validate-form" method="post" novalidate>
+        {% csrf_token %}
+        <h1>Profile</h1>
+        {% for field in form %}
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {{ field.errors }}
+        {% endfor %}
+        <button class="button primary" type="submit">Save Profile</button>
+    </form>
+
+    <section class="orders">
+        <h2>Orders</h2>
+        {% for order in orders %}
+            <article class="order-card">
+                <div>
+                    <h3>Order #{{ order.id }}</h3>
+                    <p>{{ order.created_at|date:"M d, Y" }} · {{ order.get_status_display }}</p>
+                </div>
+                <strong>${{ order.total }}</strong>
+            </article>
+        {% empty %}
+            <p>No orders yet.</p>
+        {% endfor %}
+    </section>
+</section>
+{% endblock %}
